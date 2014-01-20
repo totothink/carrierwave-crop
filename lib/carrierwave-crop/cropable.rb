@@ -4,7 +4,7 @@ module CarrierWave::Cropable
   included do
 
     include CarrierWave::ModelDelegateAttribute
-    
+
     model_delegate_attribute :x
     model_delegate_attribute :y
     model_delegate_attribute :w
@@ -37,7 +37,7 @@ module CarrierWave::Cropable
   # Here the original crop area dimensions are restored and assigned to the model's instance.
   def resize_to_fill_and_save_dimensions(new_width, new_height)
     manipulate! do |img|
-      width, height = image_dimensions
+      width, height = image_dimensions(img)
       new_img = img.resize_to_fill(new_width, new_height)
       destroy_image(img)
 
@@ -55,7 +55,7 @@ module CarrierWave::Cropable
     end
   end
   
-  def image_dimensions(image)
+  def image_dimensions(img)
     [img.columns, img.rows]
   end
     
