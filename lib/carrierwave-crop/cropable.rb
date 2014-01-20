@@ -2,10 +2,13 @@ module CarrierWave::Cropable
   extend ActiveSupport::Concern
 
   included do
-    module_delegate_attribute :x
-    module_delegate_attribute :y
-    module_delegate_attribute :w
-    module_delegate_attribute :h
+
+    include CarrierWave::ModelDelegateAttribute
+    
+    model_delegate_attribute :x
+    model_delegate_attribute :y
+    model_delegate_attribute :w
+    model_delegate_attribute :h
   end
 
   # Crop processor
@@ -56,7 +59,7 @@ module CarrierWave::Cropable
     [img.columns, img.rows]
   end
     
-  unless respond_to?(destroy_image)  
+  unless respond_to?(:destroy_image)  
     def destroy_image(image)
       image.destroy! if image.respond_to?(:destroy!)
     end
