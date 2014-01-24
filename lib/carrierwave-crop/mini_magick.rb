@@ -5,10 +5,7 @@ module CarrierWave
       manipulate! do |img|
         img.combine_options do |i|
           i.crop "#{width}x#{height}+#{x}+#{y}!"
-
-          i.gravity "Center"
-          i.background "rgba(255,255,255,0.0)"
-          i.extent "#{width}x#{height}"
+          i.resize "#{new_width}x#{new_height}"
         end
       end
     end
@@ -19,9 +16,22 @@ module CarrierWave
       manipulate! do |img|
         width, height = img[:dimensions]
         img.combine_options do |i|
+          if new_width != width || new_height != height
+            scale_x = new_width/width.to_f
+            scale_y = new_height/height.to_f
+            if scale_x >= scale_y
+              cols = (scale_x * (width + 0.5)).round
+              rows = (scale_x * (height + 0.5)).round
+              i.resize "#{cols}"
+            else
+              cols = (scale_y * (width + 0.5)).round
+              rows = (scale_y * (height + 0.5)).round
+              i.resize "x#{rows}"
+            end
+          end
           i.gravity 'Center'
           i.background "rgba(255,255,255,0.0)"
-          i.extent "#{width}x#{height}"
+          i.extent "#{new_width}x#{new_height}" if cols != new_width || rows != new_height
         end
         w_ratio = width.to_f / new_width.to_f
         h_ratio = height.to_f / new_height.to_f
