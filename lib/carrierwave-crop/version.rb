@@ -1,3 +1,5 @@
-module CarrierwaveCrop
-  VERSION = "0.0.1"
+module CarrierWave
+  module Crop
+    VERSION = "0.0.2"
+  end
 end

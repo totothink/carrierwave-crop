@@ -5,7 +5,7 @@ require 'carrierwave-crop/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "carrierwave-crop"
-  spec.version       = CarrierwaveCrop::VERSION
+  spec.version       = CarrierWave::Crop::VERSION
   spec.authors       = ["totothink"]
   spec.email         = ["yalong1976@gmail.com"]
   spec.description   = %q{add crop feature with carrierwave}
